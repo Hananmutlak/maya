@@ -1,0 +1,7 @@
+class e{constructor(){this.allCourses=[],this.filteredCourses=[]}async fetchCourses(){try{let e=await fetch("./courses.json");if(!e.ok)throw Error("Error loading data");this.allCourses=await e.json(),this.filteredCourses=this.allCourses}catch(e){console.error("Error fetching courses:",e)}}filterCourses(e){e?this.filteredCourses=this.allCourses.filter(s=>s.courseName.toLowerCase().includes(e.toLowerCase())||s.teacher.toLowerCase().includes(e.toLowerCase())):this.filteredCourses=this.allCourses}getFilteredCourses(){return this.filteredCourses}}class s{constructor(){this.tableBody=document.querySelector("#coursesTable tbody"),this.searchBox=document.getElementById("searchBox")}displayCourses(e){this.tableBody.innerHTML="",e.forEach(e=>{let s=document.createElement("tr");s.innerHTML=`
+                <td>${e.courseNumber}</td>
+                <td>${e.courseName}</td>
+                <td>${e.teacher}</td>
+                <td>${e.date}</td>
+            `,this.tableBody.appendChild(s)})}bindSearch(e){this.searchBox.addEventListener("input",s=>{e(s.target.value)})}}class t{constructor(e,s){this.model=e,this.view=s,this.view.bindSearch(this.handleSearch.bind(this))}async init(){await this.model.fetchCourses(),this.view.displayCourses(this.model.getFilteredCourses())}handleSearch(e){this.model.filterCourses(e),this.view.displayCourses(this.model.getFilteredCourses())}}document.addEventListener("DOMContentLoaded",()=>{new t(new e,new s).init()});
+//# sourceMappingURL=index.82054550.js.map
